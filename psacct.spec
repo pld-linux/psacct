@@ -7,8 +7,6 @@ Version:	6.3.5
 Release:	8
 License:	GPL
 Group:		Applications/System
-Group(de):	Applikationen/System
-Group(pl):	Aplikacje/System
 Source0:	ftp://prep.ai.mit.edu/pub/gnu/acct-%{version}.tar.gz
 Source1:	acct.logrotate
 Source2:	%{name}-non-english-man-pages.tar.bz2
