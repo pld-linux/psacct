@@ -9,7 +9,7 @@ Group(pl):	Narzêdzia/System
 Source0:	ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
 Source1:	acct.logrotate
 Patch0:		acct-info.patch
-Prereq:		/sbin/install-info
+Prereq:		/usr/sbin/fix-info-dir
 Requires:	logrotate
 BuildRoot:	/tmp/%{name}-%{version}-root
 
@@ -49,13 +49,14 @@ gzip -9f $RPM_BUILD_ROOT{%{_infodir}/*,%{_mandir}/man[18]/*} ChangeLog NEWS
 rm -rf $RPM_BUILD_ROOT
 
 %post
-/sbin/install-info %{_infodir}/accounting.info.gz /etc/info-dir
+/usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
     /usr/sbin/accton &>/dev/null    
     echo "Type \"/usr/sbin/actton /var/account/pacct\" to run accounting." 
 
 %preun
+/usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
+
 if [ "$1" = "0" ]; then
-    /sbin/install-info --delete %{_infodir}/accounting.info.gz /etc/info-dir
     /usr/sbin/accton &>/dev/null
 fi
 
