@@ -102,10 +102,5 @@ fi
 - added %verify support for pacct, usracct, savacct,
 - added rpm_opt_flags support,
 - build from non root's account,
-- major changes.
-
-* Thu Oct 23 1997 Donnie Barnes <djb@redhat.com>
-- updated from 6.2 to 6.3
-
-* Mon Jul 21 1997 Erik Troan <ewt@redhat.com>
-- built against glibc
+- major changes,
+- start at RH spec.
