@@ -50,7 +50,7 @@ gzip -9nf ChangeLog NEWS
 rm -rf $RPM_BUILD_ROOT
 
 %post
-%fix_info_dir
+[ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 /usr/sbin/accton &>/dev/null
 echo "Type \"/usr/sbin/actton /var/account/pacct\" to run accounting."
 touch /var/account/{pacct,usracct,savacct}
@@ -62,7 +62,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %postun
-%fix_info_dir
+[ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
 %files
 %defattr(644,root,root,755)
