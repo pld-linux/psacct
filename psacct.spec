@@ -39,7 +39,7 @@ rm -rf $RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT/{etc/logrotate.d,usr,var/account}
 
-make install \
+%{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 touch $RPM_BUILD_ROOT/var/account/{pacct,usracct,savacct}
