@@ -53,10 +53,10 @@ processos estão incluídas aqui.
 %patch3 -p1
 
 %build
-aclocal
+%{__aclocal}
 %{__autoconf}
 %{__automake}
-autoheader
+%{__autoheader}
 %configure
 
 %{__make}
