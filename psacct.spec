@@ -13,8 +13,10 @@ Group:		Applications/System
 # GNU page points to Debian resources, but they have modified ".orig" package
 # and we have something else in CVS, which probably matches this:
 Source0:	ftp://ftp.pl.openwall.com/pub/Owl/pool/sources/acct/acct-%{version}.tar.gz
+# Source0-md5:	a982333648d68e0eabf87989a1e5427b
 Source1:	acct.logrotate
 Source2:	%{name}-non-english-man-pages.tar.bz2
+# Source2-md5:	85eb213fc45fad1c7834d239ff8e28a4
 Patch0:		acct-info.patch
 Patch1:		acct-amfix.patch
 Patch2:		%{name}-ac_am.patch
