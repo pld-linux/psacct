@@ -28,7 +28,7 @@ oraz monitorowania systemu.
 
 %build
 autoconf
-./configure \
+./configure %{_target} \
 	--prefix=/usr
 make CFLAGS="$RPM_OPT_FLAGS -Wall -Wmissing-prototypes" LDFLAGS="-s"
 
