@@ -57,7 +57,7 @@ fi
 %files
 %defattr(644, root, root, 755)
 %attr(600, root, root) %config %verify(not size md5 mtime) /var/log/*
-%attr(700, root, root) /usr/sbin/*
+%attr(700, root, root) %{_sbindir}/*
 %attr(700, root, root) %{_bindir}/*
 %{_mandir}/man[18]/*
 %{_infodir}/accounting.info.gz
