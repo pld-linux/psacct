@@ -41,7 +41,7 @@ processos estão incluídas aqui.
 %build
 aclocal
 autoconf
-automake -a -c
+automake -a -c -f
 autoheader
 %configure
 
