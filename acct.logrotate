@@ -1,14 +1,14 @@
-/var/account/pacct {
+/var/log/pacct {
 	daily
 	rotate 7
 }
 
-/var/account/savacct {
+/var/log/savacct {
 	daily
 	rotate 7
 }
 
-/var/account/usracct {
+/var/log/usracct {
 	daily
 	rotate 7
 }
