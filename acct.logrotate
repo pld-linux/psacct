@@ -1,12 +1,14 @@
 /var/account/pacct {
-    weekly
-    rotate 1
+	daily
+	rotate 7
 }
+
 /var/account/savacct {
-    weekly
-    rotate 1
+	daily
+	rotate 7
 }
+
 /var/account/usracct {
-    weekly
-    rotate 1
+	daily
+	rotate 7
 }
