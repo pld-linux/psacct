@@ -1,0 +1,12 @@
+/var/log/pacct {
+    weekly
+    rotate 1
+}
+/var/log/savacct {
+    weekly
+    rotate 1
+}
+/var/log/usracct {
+    weekly
+    rotate 1
+}
