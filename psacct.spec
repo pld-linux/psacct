@@ -11,7 +11,7 @@ Source1:	acct.logrotate
 Patch0:		acct-info.patch
 Prereq:		/usr/sbin/fix-info-dir
 Requires:	logrotate
-BuildRoot:	/tmp/%{name}-%{version}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 The tools necessary for accounting the activities of processes are
