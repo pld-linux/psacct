@@ -2,14 +2,13 @@ Summary:	Process accounting tools
 Summary(pl):	Program do logowania procesów u¿ytkowników
 Name:		acct
 Version:	6.3.2
-Release:	7
+Release:	8
 Copyright:	GPL
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
 Source0:	ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
 Source1:	acct.logrotate
-Patch0:		acct-config.patch
-Patch1:		acct-info.patch
+Patch0:		acct-info.patch
 Prereq:		/sbin/install-info
 Requires:	logrotate
 BuildRoot:	/tmp/%{name}-%{version}-root
@@ -24,8 +23,7 @@ oraz monitorowania systemu.
 
 %prep
 %setup -q 
-%patch0 -p1
-%patch1 -p1
+%patch -p1
 
 %build
 autoconf
@@ -37,10 +35,10 @@ make CFLAGS="$RPM_OPT_FLAGS -Wall -Wmissing-prototypes" LDFLAGS="-s"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/{etc/logrotate.d,usr,var/log}
+install -d $RPM_BUILD_ROOT/{etc/logrotate.d,usr,var/account}
 
 make prefix=$RPM_BUILD_ROOT/usr install
-touch $RPM_BUILD_ROOT/var/log/{pacct,usracct,savacct}
+touch $RPM_BUILD_ROOT/var/account/{pacct,usracct,savacct}
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/logrotate.d/acct
 
@@ -52,10 +50,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 /sbin/install-info %{_infodir}/accounting.info.gz /etc/info-dir
+    /usr/sbin/accton &>/dev/null    
+    echo "Type \"/usr/sbin/actton /var/account/pacct\" to run accounting." 
 
 %preun
 if [ "$1" = "0" ]; then
-	/sbin/install-info --delete %{_infodir}/accounting.info.gz /etc/info-dir
+    /sbin/install-info --delete %{_infodir}/accounting.info.gz /etc/info-dir
+    /usr/sbin/accton
 fi
 
 %files
@@ -75,7 +76,7 @@ fi
 
 %{_infodir}/accounting.info.gz
 
-%attr(600,root,root) %config %verify(not size md5 mtime) /var/log/*
+%attr(600,root,root) %config %verify(not size md5 mtime) /var/account/*
 
 %changelog
 * Mon May 24 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
