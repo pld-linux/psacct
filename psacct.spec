@@ -39,7 +39,7 @@ install -d $RPM_BUILD_ROOT/{usr,var/log}
 make prefix=$RPM_BUILD_ROOT/usr install
 touch $RPM_BUILD_ROOT/var/log/{pacct,usracct,savacct}
 rm -f $RPM_BUILD_ROOT%{_mandir}/man1/last.1
-rm -f $RPM_BUILD_ROOT/usr/bin/last
+rm -f $RPM_BUILD_ROOT%{_bindir}/last
 
 gzip -9f $RPM_BUILD_ROOT/usr/{info/*,man/man[18]/*}
 
@@ -58,7 +58,7 @@ fi
 %defattr(644, root, root, 755)
 %attr(600, root, root) %config %verify(not size md5 mtime) /var/log/*
 %attr(700, root, root) /usr/sbin/*
-%attr(700, root, root) /usr/bin/*
+%attr(700, root, root) %{_bindir}/*
 %{_mandir}/man[18]/*
 %{_infodir}/accounting.info.gz
 
