@@ -2,11 +2,12 @@ Summary:     Process accounting tools
 Summary(pl): Program do logowania procesów u¿ytkowników
 Name:        acct
 Version:     6.3.2
-Release:     4
+Release:     5
 Copyright:   GPL
 Group:       Utilities/System
 Source:      ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
-Patch:       %{name}.patch
+Patch0:      acct.patch
+Patch1:      acct-info.patch
 Prereq:      /sbin/install-info
 BuildRoot:   /tmp/%{name}-%{version}-root
 Obsoletes:   psacct
@@ -21,12 +22,14 @@ oraz monitorowania systemu.
 
 %prep
 %setup -q 
-%patch -p0
+%patch0 -p1
+%patch1 -p1
 
 %build
 autoconf
-LDFLAGS="-s" ./configure --prefix=/usr
-make CFLAGS="$RPM_OPT_FLAGS -Wall -Wmissing-prototypes"
+./configure \
+	--prefix=/usr
+make CFLAGS="$RPM_OPT_FLAGS -Wall -Wmissing-prototypes" LDFLAGS="-s"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -43,13 +46,11 @@ gzip -9f $RPM_BUILD_ROOT/usr/{info/*,man/man[18]/*}
 rm -rf $RPM_BUILD_ROOT
 
 %post
-/sbin/install-info /usr/info/accounting.info.gz /etc/info-dir \
---entry \
-"* accounting: (accounting).                     The GNU Process Accounting Suite."
+/sbin/install-info /usr/info/accounting.info.gz /etc/info-dir
 
 %preun
-if [ $1 = 1 ]; then
-        /sbin/install-info --delete /usr/info/accounting.info.gz /etc/info-dir
+if [ $1 = 0 ]; then
+	/sbin/install-info --delete /usr/info/accounting.info.gz /etc/info-dir
 fi
 
 %files
@@ -57,14 +58,14 @@ fi
 %attr(600, root, root) %config %verify(not size md5 mtime) /var/log/*
 %attr(700, root, root) /usr/sbin/*
 %attr(700, root, root) /usr/bin/*
-%attr(644, root, man) /usr/man/man[18]/*
+%attr(644, root,  man) /usr/man/man[18]/*
 /usr/info/accounting.info.gz
 
 %changelog
-* Sun Nov 29 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
-  [6.3.2-4]
+* Wed Jan 06 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
+  [6.3.2-5]
 - added gzipping man pages,
-- standarized {un}registering info pages.
+- standarized {un}registering info pages (added acct-info.patch).
 
 * Sun Nov 22 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [6.3.2-3]
