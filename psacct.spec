@@ -2,7 +2,7 @@ Summary:     Process accounting tools
 Summary(pl): Program do logowania procesów u¿ytkowników
 Name:        acct
 Version:     6.3.2
-Release:     2
+Release:     3
 Copyright:   GPL
 Group:       Utilities/System
 Source:      ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
@@ -42,10 +42,12 @@ rm -f $RPM_BUILD_ROOT/usr/bin/last
 rm -rf $RPM_BUILD_ROOT
 
 %post
-/sbin/install-info /usr/info/accounting.info.gz /usr/info/dir --entry="* accounting: (acct).            The GNU Process Accounting Suite."
+/sbin/install-info /usr/info/accounting.info.gz /usr/info/dir --entry \
+"* accounting: (acct).                           The GNU Process Accounting Suite."
 
 %preun
-/sbin/install-info --delete /usr/info/accounting.info.gz /usr/info/dir --entry="* accounting: (acct).            The GNU Process Accounting Suite."
+/sbin/install-info --delete /usr/info/accounting.info.gz /usr/info/dir --entry \
+"* accounting: (acct).                           The GNU Process Accounting Suite."
 
 %files
 %defattr(644, root, root, 755)
@@ -56,13 +58,18 @@ rm -rf $RPM_BUILD_ROOT
 /usr/info/accounting.info.gz
 
 %changelog
+* Sun Nov 22 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
+  [6.3.2-3]
+- fixed --entry text on {un}registering info page for ed in %post
+  %preun.
+
 * Fri Oct 09 1998 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
   [6.3.2-2]
 - fixed pl translation,
 - Obsoletes psacct,
 - minor changes.
 
-* Tue Aug 11 1998 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
+* Tue Aug 11 1998 Wojtek ¦lusarczyk <wojtek@SHADOW.EU.ORG>
   [6.3.2-1]
 - translation modified for pl,
 - moved %changelog at the end of spec,
