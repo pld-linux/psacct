@@ -13,12 +13,12 @@ Requires:	logrotate
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-The tools necessary for accounting the activities of processes are included
-here.
+The tools necessary for accounting the activities of processes are
+included here.
 
 %description -l pl
-Narzêdzia niezbêdne do logowania wszystkich procesów i komend u¿ytkowników
-oraz monitorowania systemu.
+Narzêdzia niezbêdne do logowania wszystkich procesów i komend
+u¿ytkowników oraz monitorowania systemu.
 
 %prep
 %setup -q -n acct-%{version}
