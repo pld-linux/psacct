@@ -4,12 +4,15 @@ Name:		psacct
 Version:	6.3.5
 Release:	6
 License:	GPL
-Group:		Utilities/System
-Group(pl):	Narzêdzia/System
+Group:		Applications/System
+Group(de):	Applikationen/System
+Group(pl):	Aplikacje/System
 Source0:	ftp://prep.ai.mit.edu/pub/gnu/acct-%{version}.tar.gz
 Source1:	acct.logrotate
 Patch0:		acct-info.patch
 Requires:	logrotate
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -27,7 +30,7 @@ u¿ytkowników oraz monitorowania systemu.
 %build
 aclocal
 autoconf
-automake
+automake -a -c
 autoheader
 %configure
 
