@@ -1,5 +1,7 @@
 Summary:	Process accounting tools
+Summary(es):	Herramientas de contabilidad de procesos
 Summary(pl):	Program do logowania procesów u¿ytkowników
+Summary(pt_BR):	Ferramentas de contabilização de processos
 Name:		psacct
 Version:	6.3.5
 Release:	7
@@ -20,9 +22,17 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 The tools necessary for accounting the activities of processes are
 included here.
 
+%description -l es
+Están incluidas aquí las herramientas necesarias para contabilizar las
+actividades de procesos.
+
 %description -l pl
 Narzêdzia niezbêdne do logowania wszystkich procesów i komend
 u¿ytkowników oraz monitorowania systemu.
+
+%description -l pt_BR
+As ferramentas necessárias para contabilizar as atividades de
+processos estão incluídas aqui.
 
 %prep
 %setup -q -n acct-%{version}
