@@ -40,8 +40,8 @@ processos estão incluídas aqui.
 
 %build
 aclocal
-autoconf
-automake -a -c -f
+%{__autoconf}
+%{__automake}
 autoheader
 %configure
 
