@@ -9,7 +9,7 @@ Version:	6.3.5
 Release:	9
 License:	GPL
 Group:		Applications/System
-Source0:	ftp://prep.ai.mit.edu/pub/gnu/acct-%{version}.tar.gz
+Source0:	ftp://ftp.gnu.org/pub/gnu/acct/acct-%{version}.tar.gz
 Source1:	acct.logrotate
 Source2:	%{name}-non-english-man-pages.tar.bz2
 Patch0:		acct-info.patch
