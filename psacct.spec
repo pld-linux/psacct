@@ -2,7 +2,7 @@ Summary:	Process accounting tools
 Summary(pl):	Program do logowania procesów u¿ytkowników
 Name:		psacct
 Version:	6.3.5
-Release:	3
+Release:	5
 License:	GPL
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
@@ -72,6 +72,7 @@ fi
 %doc {ChangeLog,NEWS}.gz
 
 %attr(640,root,root) /etc/logrotate.d/*
+%attr(750,root,root) %dir /var/account
 %attr(640,root,root) %ghost /var/account/pacct
 %attr(640,root,root) %ghost /var/account/usracct
 %attr(640,root,root) %ghost /var/account/savacct
