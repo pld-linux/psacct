@@ -42,18 +42,15 @@ gzip -9f $RPM_BUILD_ROOT/usr/{info/*,man/man[18]/*}
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%pre
-if [ $1 = 1 ]; then
-	/sbin/install-info /usr/info/dir --remove acct
-fi
-
 %post
-/sbin/install-info /usr/info/accounting.info.gz /usr/info/dir --entry \
+/sbin/install-info /usr/info/accounting.info.gz /etc/info-dir \
+--entry \
 "* accounting: (acct).                           The GNU Process Accounting Suite."
 
 %preun
-/sbin/install-info --delete /usr/info/accounting.info.gz /usr/info/dir --entry \
-"* accounting: (acct).                           The GNU Process Accounting Suite."
+if [ $1 = 1 ]; then
+        /sbin/install-info --delete /usr/info/accounting.info.gz /etc/info-dir
+fi
 
 %files
 %defattr(644, root, root, 755)
@@ -67,8 +64,7 @@ fi
 * Sun Nov 29 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [6.3.2-4]
 - added gzipping man pages,
-- added %pre section with unregistering info pages on
-  preuninstall phase during upgrade.
+- standarized {un}registering info pages.
 
 * Sun Nov 22 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [6.3.2-3]
