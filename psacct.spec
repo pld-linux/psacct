@@ -2,7 +2,7 @@ Summary:	Process accounting tools
 Summary(pl):	Program do logowania procesów u¿ytkowników
 Name:		psacct
 Version:	6.3.5
-Release:	5
+Release:	6
 License:	GPL
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
