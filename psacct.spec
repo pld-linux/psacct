@@ -13,7 +13,6 @@ Patch1:		acct-info.patch
 Prereq:		/sbin/install-info
 Requires:	logrotate
 BuildRoot:	/tmp/%{name}-%{version}-root
-Obsoletes:	psacct
 
 %description
 The tools necessary for accounting the activities of processes are
@@ -30,7 +29,7 @@ oraz monitorowania systemu.
 
 %build
 autoconf
-    ./configure \
+./configure \
 	 --prefix=%{_prefix} \
 	 %{_target_platform}
 
@@ -45,7 +44,8 @@ touch $RPM_BUILD_ROOT/var/log/{pacct,usracct,savacct}
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/logrotate.d/acct
 
-gzip -9f $RPM_BUILD_ROOT%{_datadir}/{info/*,man/man[18]/*} ChangeLog NEWS
+gzip -9f $RPM_BUILD_ROOT{%{_infodir}/*,%{_mandir}/man[18]/*} \
+	ChangeLog NEWS
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -55,7 +55,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %preun
 if [ "$1" = "0" ]; then
-    /sbin/install-info --delete %{_infodir}/accounting.info.gz /etc/info-dir
+	/sbin/install-info --delete %{_infodir}/accounting.info.gz /etc/info-dir
 fi
 
 %files
