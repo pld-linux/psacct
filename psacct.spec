@@ -2,7 +2,7 @@ Summary:	Process accounting tools
 Summary(pl):	Program do logowania procesów u¿ytkowników
 Name:		psacct
 Version:	6.3.5
-Release:	6
+Release:	7
 License:	GPL
 Group:		Applications/System
 Group(de):	Applikationen/System
@@ -10,6 +10,7 @@ Group(pl):	Aplikacje/System
 Source0:	ftp://prep.ai.mit.edu/pub/gnu/acct-%{version}.tar.gz
 Source1:	acct.logrotate
 Patch0:		acct-info.patch
+Patch1:		acct-amfix.patch
 Requires:	logrotate
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -26,6 +27,7 @@ u¿ytkowników oraz monitorowania systemu.
 %prep
 %setup -q -n acct-%{version}
 %patch0 -p1
+%patch1 -p1
 
 %build
 aclocal
@@ -38,7 +40,7 @@ autoheader
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/{etc/logrotate.d,usr,var/account}
+install -d $RPM_BUILD_ROOT{/etc/logrotate.d,%{_prefix},/var/account}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -54,14 +56,14 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
-/usr/sbin/accton &>/dev/null
+/usr/sbin/accton >/dev/null 2>&1
 echo "Type \"/usr/sbin/actton /var/account/pacct\" to run accounting."
 touch /var/account/{pacct,usracct,savacct}
 chmod 640 /var/account/{pacct,usracct,savacct}
 
 %preun
 if [ "$1" = "0" ]; then
-	/usr/sbin/accton &>/dev/null
+	/usr/sbin/accton >/dev/null 2>&1
 fi
 
 %postun

@@ -1,0 +1,29 @@
+diff -Nur acct-6.3.5.orig/Makefile.am acct-6.3.5/Makefile.am
+--- acct-6.3.5.orig/Makefile.am	Thu Apr  9 01:54:03 1998
++++ acct-6.3.5/Makefile.am	Sun Oct 21 14:47:41 2001
+@@ -10,8 +10,13 @@
+ 
+ ## From what sources are those programs built?
+ 
++if NO_MKTIME
+ ac_SOURCES = ac.c common.c file_rd.c getopt.c getopt1.c hashtab.c \
+-  @MKTIME_C@ utmp_rd.c
++  mktime.c utmp_rd.c
++else
++ac_SOURCES = ac.c common.c file_rd.c getopt.c getopt1.c hashtab.c \
++  utmp_rd.c
++endif
+ ac_LDADD = @ALLOCA@
+ 
+ accton_SOURCES = accton.c common.c getopt.c getopt1.c
+diff -Nur acct-6.3.5.orig/configure.in acct-6.3.5/configure.in
+--- acct-6.3.5.orig/configure.in	Wed May 27 06:59:23 1998
++++ acct-6.3.5/configure.in	Sun Oct 21 14:49:17 2001
+@@ -28,6 +28,7 @@
+ AC_CHECK_FUNC(mktime,
+               AC_DEFINE(HAVE_MKTIME)
+               MKTIME_C="" MKTIME_O="" )
++AM_CONDITIONAL(NO_MKTIME,test MKTIME_C = "mktime.c")
+ AC_CHECK_FUNC(getpagesize, AC_DEFINE(HAVE_GETPAGESIZE))
+ AC_CHECK_FUNC(rename, AC_DEFINE(HAVE_RENAME))
+ AC_CHECK_HEADERS(limits.h stdlib.h unistd.h string.h)
