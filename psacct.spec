@@ -5,6 +5,7 @@ Version:     6.3.2
 Release:     5
 Copyright:   GPL
 Group:       Utilities/System
+Group(pl):   Narzêdzia/System
 Source:      ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
 Patch0:      acct.patch
 Patch1:      acct-info.patch
