@@ -2,7 +2,7 @@ Summary:	Process accounting tools
 Summary(pl):	Program do logowania procesów u¿ytkowników
 Name:		acct
 Version:	6.3.5
-Release:	1
+Release:	2
 Copyright:	GPL
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
@@ -54,11 +54,12 @@ rm -rf $RPM_BUILD_ROOT
     echo "Type \"/usr/sbin/actton /var/account/pacct\" to run accounting." 
 
 %preun
-/usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
-
 if [ "$1" = "0" ]; then
     /usr/sbin/accton &>/dev/null
 fi
+
+%postun
+/usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
 %files
 %defattr(644,root,root,755)
