@@ -6,7 +6,7 @@ Summary(uk):	Утил╕ти для мон╕торингу активност╕ процес╕в
 Summary(ru):	Утилиты для мониторинга активности процессов
 Name:		psacct
 Version:	6.3.5
-Release:	9
+Release:	10
 License:	GPL
 Group:		Applications/System
 # there is only 6.3.2 on ftp://ftp.gnu.org/pub/gnu/acct/
@@ -17,6 +17,8 @@ Source0:	ftp://ftp.pl.openwall.com/pub/Owl/pool/sources/acct/acct-%{version}.tar
 Source1:	acct.logrotate
 Source2:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source2-md5:	85eb213fc45fad1c7834d239ff8e28a4
+Source3:	acct.sysinit
+Source4:	acct.sysconfig
 Patch0:		acct-info.patch
 Patch1:		acct-amfix.patch
 Patch2:		%{name}-ac_am.patch
@@ -69,13 +71,15 @@ processos estЦo incluМdas aqui.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{/etc/logrotate.d,%{_prefix},/sbin,/var/log}
+install -d $RPM_BUILD_ROOT{/etc/{rc.d,logrotate.d,sysconfig},%{_prefix},/sbin,/var/log}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
-mv $RPM_BUILD_ROOT{%{_sbindir}/accton,/sbin/accton}
+mv -f $RPM_BUILD_ROOT{%{_sbindir}/accton,/sbin/accton}
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/logrotate.d/acct
+install %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/rc.acct
+install %{SOURCE4} $RPM_BUILD_ROOT/etc/sysconfig/acct
 bzip2 -dc %{SOURCE2} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
 touch $RPM_BUILD_ROOT/var/log/{pacct,usracct,savacct}
@@ -85,14 +89,18 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
-/sbin/accton >/dev/null 2>&1
-echo "Type \"/sbin/accton /var/log/pacct\" to run accounting."
-touch /var/log/{pacct,usracct,savacct}
-chmod 640 /var/log/{pacct,usracct,savacct}
+if [ "$1" = "1" ]; then
+	/etc/rc.d/rc.acct stop 1>&2
+	echo "Type \"/etc/rc.d/rc.acct start\" to run accounting."
+	touch /var/log/{pacct,usracct,savacct}
+	chmod 640 /var/log/{pacct,usracct,savacct}
+else
+	/etc/rc.d/rc.acct reload 1>&2
+fi
 
 %preun
 if [ "$1" = "0" ]; then
-	/sbin/accton >/dev/null 2>&1
+	/etc/rc.d/rc.acct stop 1>&2
 fi
 
 %postun
@@ -101,8 +109,9 @@ fi
 %files
 %defattr(644,root,root,755)
 %doc {ChangeLog,NEWS,README}*
-
-%attr(640,root,root) /etc/logrotate.d/*
+%attr(754,root,root) /etc/rc.d/rc.acct
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/acct
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/logrotate.d/acct
 %attr(640,root,root) %ghost /var/log/pacct
 %attr(640,root,root) %ghost /var/log/usracct
 %attr(640,root,root) %ghost /var/log/savacct
@@ -110,6 +119,7 @@ fi
 %attr(755,root,root) %{_bindir}/ac
 %attr(755,root,root) %{_bindir}/lastcomm
 %attr(755,root,root) /sbin/accton
+%attr(755,root,root) %{_sbindir}/dump-acct
 %attr(755,root,root) %{_sbindir}/sa
 
 %{_mandir}/man1/ac.1*

@@ -1,0 +1,10 @@
+# Customized settings for (ps)acct
+
+# set this to "off" to temporarily disable accounting without removing package
+# (call "/etc/rc.d/rc.acct start" or "/etc/rc.d/rc.acct stop" after change
+#  to turn accounting on/off immediately - normally this setting is read only
+#  on system boot or when rotating logs)
+ACCT_RUN="on"
+
+# accounting log file (must match with logrotate script!)
+ACCT_LOG_FILE="/var/log/pacct"

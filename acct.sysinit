@@ -1,0 +1,53 @@
+#!/bin/sh
+#
+# rc.sysinit/rc.shutdown script for turning on/off (ps)acct
+# (note that it isn't normal init script)
+#
+# $Id$
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+# Set defaults
+ACCT_RUN="off"
+ACCT_LOG_FILE="/var/log/pacct"
+
+# Get service config - may override defaults
+[ -f /etc/sysconfig/acct ] && . /etc/sysconfig/acct
+
+# See how we were called.
+case "$1" in
+  start)
+	# called by rc.sysinit (or manually by administrator)
+	if is_yes "$ACCT_RUN"; then
+	    run_cmd "Turning on process accounting" \
+	        /sbin/accton "$ACCT_LOG_FILE"
+	fi
+        ;;
+  stop)
+	# called by rc.shutdown (or manually by administrator)
+	# NOTE: there is no way to check if accounting is enabled in kernel -
+        # so always try to turn off
+	run_cmd "Turning off process accounting" /sbin/accton
+        ;;
+  restart|reload|force-reload)
+	# called by logrotate (or manually by administrator)
+	# NOTE: there is no way to check if accounting is enabled in kernel -
+        # so we must rely on sysconfig setting here
+	if is_yes "$ACCT_RUN"; then
+	    run_cmd "Turning on process accounting" \
+		/sbin/accton "$ACCT_LOG_FILE"
+	else
+	    run_cmd "Turning off process accounting" /sbin/accton
+	fi
+        ;;
+  *)
+        # show "Usage: %s {start|stop|status|restart|reload|force-reload}" $0
+	msg_usage "$0 {start|stop|restart|reload|force-reload}"
+        exit 1
+esac
+
+exit 0
+
+# This must be last line !
+# vi:syntax=sh:tw=78:ts=8:sw=4
