@@ -4,13 +4,14 @@ Summary(pl):	Program do logowania procesów u¿ytkowników
 Summary(pt_BR):	Ferramentas de contabilização de processos
 Name:		psacct
 Version:	6.3.5
-Release:	7
+Release:	8
 License:	GPL
 Group:		Applications/System
 Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
 Source0:	ftp://prep.ai.mit.edu/pub/gnu/acct-%{version}.tar.gz
 Source1:	acct.logrotate
+Source2:	%{name}-non-english-man-pages.tar.bz2
 Patch0:		acct-info.patch
 Patch1:		acct-amfix.patch
 Requires:	logrotate
@@ -58,6 +59,7 @@ install -d $RPM_BUILD_ROOT{/etc/logrotate.d,%{_prefix},/var/account}
 touch $RPM_BUILD_ROOT/var/account/{pacct,usracct,savacct}
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/logrotate.d/acct
+bzip2 -dc %{SOURCE2} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
 gzip -9nf ChangeLog NEWS
 
@@ -98,5 +100,9 @@ fi
 %{_mandir}/man1/lastcomm.1*
 %{_mandir}/man8/sa.8*
 %{_mandir}/man8/accton.8*
+%lang(fi) %{_mandir}/fi/man1/ac.1*
+%lang(fi) %{_mandir}/fi/man1/lastcomm.1*
+%lang(fr) %{_mandir}/fr/man8/accton.8*
+%lang(pl) %{_mandir}/pl/man1/ac.1*
 
 %{_infodir}/accounting.info*
