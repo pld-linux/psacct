@@ -1,8 +1,8 @@
 Summary:	Process accounting tools
 Summary(pl):	Program do logowania procesów u¿ytkowników
 Name:		acct
-Version:	6.3.2
-Release:	8
+Version:	6.3.5
+Release:	1
 Copyright:	GPL
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
@@ -26,24 +26,24 @@ oraz monitorowania systemu.
 %patch -p1
 
 %build
-autoconf
-./configure \
-	 --prefix=%{_prefix} \
-	 %{_target_platform}
+%GNUconfigure
 
-make CFLAGS="$RPM_OPT_FLAGS -Wall -Wmissing-prototypes" LDFLAGS="-s"
+make LDFLAGS="-s"
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
 install -d $RPM_BUILD_ROOT/{etc/logrotate.d,usr,var/account}
 
-make prefix=$RPM_BUILD_ROOT/usr install
+make \
+    prefix=$RPM_BUILD_ROOT%{_prefix} \
+    install
+
 touch $RPM_BUILD_ROOT/var/account/{pacct,usracct,savacct}
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/logrotate.d/acct
 
-gzip -9f $RPM_BUILD_ROOT{%{_infodir}/*,%{_mandir}/man[18]/*} \
-	ChangeLog NEWS
+gzip -9f $RPM_BUILD_ROOT{%{_infodir}/*,%{_mandir}/man[18]/*} ChangeLog NEWS
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -56,12 +56,13 @@ rm -rf $RPM_BUILD_ROOT
 %preun
 if [ "$1" = "0" ]; then
     /sbin/install-info --delete %{_infodir}/accounting.info.gz /etc/info-dir
-    /usr/sbin/accton
+    /usr/sbin/accton &>/dev/null
 fi
 
 %files
 %defattr(644,root,root,755)
 %doc {ChangeLog,NEWS}.gz
+
 %attr(640,root,root) /etc/logrotate.d/*
 
 %attr(755,root,root) %{_bindir}/ac
@@ -79,6 +80,10 @@ fi
 %attr(600,root,root) %config %verify(not size md5 mtime) /var/account/*
 
 %changelog
+* Thu May 27 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
+  [6.3.5-1]
+- up version (from debian devel ;) 
+
 * Mon May 24 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
   [6.3.2-7]
 - FHS 2.0,
