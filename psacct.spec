@@ -2,60 +2,67 @@ Summary:	Process accounting tools
 Summary(pl):	Program do logowania procesów u¿ytkowników
 Name:		acct
 Version:	6.3.5
-Release:	2
-Copyright:	GPL
+Release:	3
+License:	GPL
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
 Source0:	ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
 Source1:	acct.logrotate
 Patch0:		acct-info.patch
 Prereq:		/usr/sbin/fix-info-dir
+BuildRequires:	automake
+BuildRequires:	autoconf
 Requires:	logrotate
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-The tools necessary for accounting the activities of processes are
-included here.
+The tools necessary for accounting the activities of processes are included
+here.
 
 %description -l pl
 Narzêdzia niezbêdne do logowania wszystkich procesów i komend u¿ytkowników
-oraz monitorowania systemu. 
+oraz monitorowania systemu.
 
 %prep
 %setup -q 
-%patch -p1
+%patch0 -p1
 
 %build
-%GNUconfigure
+aclocal
+autoconf
+automake
+LDFLAGS="-s"; export LDFLAGS
+%configure
 
-make LDFLAGS="-s"
+make
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT/{etc/logrotate.d,usr,var/account}
 
-make \
-    prefix=$RPM_BUILD_ROOT%{_prefix} \
-    install
+make install \
+	DESTDIR=$RPM_BUILD_ROOT
 
 touch $RPM_BUILD_ROOT/var/account/{pacct,usracct,savacct}
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/logrotate.d/acct
 
-gzip -9f $RPM_BUILD_ROOT{%{_infodir}/*,%{_mandir}/man[18]/*} ChangeLog NEWS
+gzip -9nf $RPM_BUILD_ROOT{%{_infodir}/*,%{_mandir}/man[18]/*} ChangeLog NEWS
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post
 /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
-    /usr/sbin/accton &>/dev/null    
-    echo "Type \"/usr/sbin/actton /var/account/pacct\" to run accounting." 
+/usr/sbin/accton &>/dev/null
+echo "Type \"/usr/sbin/actton /var/account/pacct\" to run accounting."
+touch /var/account/{pacct,usracct,savacct}
+chmod 640 /var/account/{pacct,usracct,savacct}
 
 %preun
 if [ "$1" = "0" ]; then
-    /usr/sbin/accton &>/dev/null
+	/usr/sbin/accton &>/dev/null
 fi
 
 %postun
@@ -66,17 +73,18 @@ fi
 %doc {ChangeLog,NEWS}.gz
 
 %attr(640,root,root) /etc/logrotate.d/*
+%attr(640,root,root) %ghost /var/account/pacct
+%attr(640,root,root) %ghost /var/account/usracct
+%attr(640,root,root) %ghost /var/account/savacct
 
 %attr(755,root,root) %{_bindir}/ac
 %attr(755,root,root) %{_bindir}/lastcomm
 %attr(755,root,root) %{_sbindir}/accton
 %attr(755,root,root) %{_sbindir}/sa
 
-%{_mandir}/man1/ac.1.gz
-%{_mandir}/man1/lastcomm.1.gz
-%{_mandir}/man8/sa.8.gz
-%{_mandir}/man8/accton.8.gz
+%{_mandir}/man1/ac.1*
+%{_mandir}/man1/lastcomm.1*
+%{_mandir}/man8/sa.8*
+%{_mandir}/man8/accton.8*
 
-%{_infodir}/accounting.info.gz
-
-%attr(600,root,root) %config %verify(not size md5 mtime) /var/account/*
+%{_infodir}/accounting.info*
