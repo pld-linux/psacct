@@ -45,7 +45,7 @@ rm -rf $RPM_BUILD_ROOT
 %post
 /sbin/install-info /usr/info/accounting.info.gz /etc/info-dir \
 --entry \
-"* accounting: (acct).                           The GNU Process Accounting Suite."
+"* accounting: (accounting).                     The GNU Process Accounting Suite."
 
 %preun
 if [ $1 = 1 ]; then
