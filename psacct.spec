@@ -1,17 +1,17 @@
-Summary:     Process accounting tools
-Summary(pl): Program do logowania procesów u¿ytkowników
-Name:        acct
-Version:     6.3.2
-Release:     5
-Copyright:   GPL
-Group:       Utilities/System
-Group(pl):   Narzêdzia/System
-Source:      ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
-Patch0:      acct.patch
-Patch1:      acct-info.patch
-Prereq:      /sbin/install-info
-BuildRoot:   /tmp/%{name}-%{version}-root
-Obsoletes:   psacct
+Summary:	Process accounting tools
+Summary(pl):	Program do logowania procesów u¿ytkowników
+Name:		acct
+Version:	6.3.2
+Release:	6
+Copyright:	GPL
+Group:		Utilities/System
+Group(pl):	Narzêdzia/System
+Source:		ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
+Patch0:		acct-config.patch
+Patch1:		acct-info.patch
+Prereq:		/sbin/install-info
+BuildRoot:	/tmp/%{name}-%{version}-root
+Obsoletes:	psacct
 
 %description
 The tools necessary for accounting the activities of processes are
@@ -28,8 +28,10 @@ oraz monitorowania systemu.
 
 %build
 autoconf
-./configure %{_target} \
-	--prefix=/usr
+    ./configure \
+	 --prefix=%{_prefix} \
+	 %{_target_platform}
+
 make CFLAGS="$RPM_OPT_FLAGS -Wall -Wmissing-prototypes" LDFLAGS="-s"
 
 %install
@@ -38,10 +40,8 @@ install -d $RPM_BUILD_ROOT/{usr,var/log}
 
 make prefix=$RPM_BUILD_ROOT/usr install
 touch $RPM_BUILD_ROOT/var/log/{pacct,usracct,savacct}
-rm -f $RPM_BUILD_ROOT%{_mandir}/man1/last.1
-rm -f $RPM_BUILD_ROOT%{_bindir}/last
 
-gzip -9f $RPM_BUILD_ROOT/usr/{info/*,man/man[18]/*}
+gzip -9f $RPM_BUILD_ROOT%{_datadir}/{info/*,man/man[18]/*}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -55,14 +55,28 @@ if [ $1 = 0 ]; then
 fi
 
 %files
-%defattr(644, root, root, 755)
-%attr(600, root, root) %config %verify(not size md5 mtime) /var/log/*
-%attr(700, root, root) %{_sbindir}/*
-%attr(700, root, root) %{_bindir}/*
-%{_mandir}/man[18]/*
+%defattr(644,root,root,755)
+
+%attr(755,root,root) %{_bindir}/ac
+%attr(755,root,root) %{_bindir}/lastcomm
+%attr(755,root,root) %{_sbindir}/accton
+%attr(755,root,root) %{_sbindir}/sa
+
+%{_mandir}/man1/ac.1.gz
+%{_mandir}/man1/lastcomm.1.gz
+%{_mandir}/man8/sa.8.gz
+%{_mandir}/man8/accton.8.gz
+
 %{_infodir}/accounting.info.gz
 
+%attr(600,root,root) %config %verify(not size md5 mtime) /var/log/*
+
 %changelog
+* Sat May 22 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
+  [6.3.3-6]
+- removed dump-{utmpd,acct},
+- more macros.
+
 * Wed Jan 06 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [6.3.2-5]
 - added gzipping man pages,
@@ -84,7 +98,7 @@ fi
 - translation modified for pl,
 - moved %changelog at the end of spec,
 - added %defattr support,
-- changed permissions of binaries to 700,
+- changed permissions of binaries,
 - added %verify support for pacct, usracct, savacct,
 - added rpm_opt_flags support,
 - build from non root's account,
