@@ -80,7 +80,7 @@ rm -rf $RPM_BUILD_ROOT
 %post
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 /sbin/accton >/dev/null 2>&1
-echo "Type \"/sbin/actton /var/log/pacct\" to run accounting."
+echo "Type \"/sbin/accton /var/log/pacct\" to run accounting."
 touch /var/log/{pacct,usracct,savacct}
 chmod 640 /var/log/{pacct,usracct,savacct}
 
