@@ -29,14 +29,12 @@ aclocal
 autoconf
 automake
 autoheader
-LDFLAGS="-s"; export LDFLAGS
 %configure
 
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 install -d $RPM_BUILD_ROOT/{etc/logrotate.d,usr,var/account}
 
 %{__make} install \
@@ -46,7 +44,7 @@ touch $RPM_BUILD_ROOT/var/account/{pacct,usracct,savacct}
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/logrotate.d/acct
 
-gzip -9nf $RPM_BUILD_ROOT{%{_infodir}/*,%{_mandir}/man[18]/*} ChangeLog NEWS
+gzip -9nf ChangeLog NEWS
 
 %clean
 rm -rf $RPM_BUILD_ROOT
