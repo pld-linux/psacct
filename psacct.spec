@@ -38,7 +38,7 @@ install -d $RPM_BUILD_ROOT/{usr,var/log}
 
 make prefix=$RPM_BUILD_ROOT/usr install
 touch $RPM_BUILD_ROOT/var/log/{pacct,usracct,savacct}
-rm -f $RPM_BUILD_ROOT/usr/man/man1/last.1
+rm -f $RPM_BUILD_ROOT%{_mandir}/man1/last.1
 rm -f $RPM_BUILD_ROOT/usr/bin/last
 
 gzip -9f $RPM_BUILD_ROOT/usr/{info/*,man/man[18]/*}
@@ -47,11 +47,11 @@ gzip -9f $RPM_BUILD_ROOT/usr/{info/*,man/man[18]/*}
 rm -rf $RPM_BUILD_ROOT
 
 %post
-/sbin/install-info /usr/info/accounting.info.gz /etc/info-dir
+/sbin/install-info %{_infodir}/accounting.info.gz /etc/info-dir
 
 %preun
 if [ $1 = 0 ]; then
-	/sbin/install-info --delete /usr/info/accounting.info.gz /etc/info-dir
+	/sbin/install-info --delete %{_infodir}/accounting.info.gz /etc/info-dir
 fi
 
 %files
@@ -59,8 +59,8 @@ fi
 %attr(600, root, root) %config %verify(not size md5 mtime) /var/log/*
 %attr(700, root, root) /usr/sbin/*
 %attr(700, root, root) /usr/bin/*
-%attr(644, root,  man) /usr/man/man[18]/*
-/usr/info/accounting.info.gz
+%attr(644, root,  man) %{_mandir}/man[18]/*
+%{_infodir}/accounting.info.gz
 
 %changelog
 * Wed Jan 06 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
