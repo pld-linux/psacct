@@ -9,17 +9,21 @@ Version:	6.3.5
 Release:	9
 License:	GPL
 Group:		Applications/System
-Source0:	ftp://ftp.gnu.org/pub/gnu/acct/acct-%{version}.tar.gz
+# there is only 6.3.2 on ftp://ftp.gnu.org/pub/gnu/acct/
+# GNU page points to Debian resources, but they have modified ".orig" package
+# and we have something else in CVS, which probably matches this:
+Source0:	ftp://ftp.pl.openwall.com/pub/Owl/pool/sources/acct/acct-%{version}.tar.gz
 Source1:	acct.logrotate
 Source2:	%{name}-non-english-man-pages.tar.bz2
 Patch0:		acct-info.patch
 Patch1:		acct-amfix.patch
 Patch2:		%{name}-ac_am.patch
 Patch3:		%{name}-path.patch
-Requires:	logrotate
+URL:		http://www.gnu.org/directory/GNU/acct.html
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	texinfo
+Requires:	logrotate
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
