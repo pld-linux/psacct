@@ -2,13 +2,13 @@ Summary:     Process accounting tools
 Summary(pl): Program do logowania procesów u¿ytkowników
 Name:        acct
 Version:     6.3.2
-Release:     3
+Release:     4
 Copyright:   GPL
 Group:       Utilities/System
 Source:      ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
 Patch:       %{name}.patch
 Prereq:      /sbin/install-info
-BuildRoot:   /var/tmp/%{name}-%{version}-root
+BuildRoot:   /tmp/%{name}-%{version}-root
 Obsoletes:   psacct
 
 %description
@@ -33,13 +33,19 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/{usr,var/log}
 
 make prefix=$RPM_BUILD_ROOT/usr install
-gzip -9f $RPM_BUILD_ROOT/usr/info/*
 touch $RPM_BUILD_ROOT/var/log/{pacct,usracct,savacct}
 rm -f $RPM_BUILD_ROOT/usr/man/man1/last.1
 rm -f $RPM_BUILD_ROOT/usr/bin/last
 
+gzip -9f $RPM_BUILD_ROOT/usr/{info/*,man/man[18]/*}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%pre
+if [ $1 = 1 ]; then
+	/sbin/install-info /usr/info/dir --remove acct
+fi
 
 %post
 /sbin/install-info /usr/info/accounting.info.gz /usr/info/dir --entry \
@@ -58,6 +64,12 @@ rm -rf $RPM_BUILD_ROOT
 /usr/info/accounting.info.gz
 
 %changelog
+* Sun Nov 29 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
+  [6.3.2-4]
+- added gziping man pages,
+- added %pre section with unregistering info pages on
+  preuninstall phase during upgrade.
+
 * Sun Nov 22 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [6.3.2-3]
 - fixed --entry text on {un}registering info page for ed in %post
