@@ -6,7 +6,7 @@ Release:	3
 License:	GPL
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
-Source0:	ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
+Source0:	ftp://prep.ai.mit.edu/pub/gnu/acct-%{version}.tar.gz
 Source1:	acct.logrotate
 Patch0:		acct-info.patch
 Prereq:		/usr/sbin/fix-info-dir
@@ -22,7 +22,7 @@ Narzêdzia niezbêdne do logowania wszystkich procesów i komend u¿ytkowników
 oraz monitorowania systemu.
 
 %prep
-%setup -q 
+%setup -q -n acct-%{version}
 %patch0 -p1
 
 %build
