@@ -66,7 +66,7 @@ fi
 %changelog
 * Sun Nov 29 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [6.3.2-4]
-- added gziping man pages,
+- added gzipping man pages,
 - added %pre section with unregistering info pages on
   preuninstall phase during upgrade.
 
