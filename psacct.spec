@@ -59,7 +59,7 @@ fi
 %attr(600, root, root) %config %verify(not size md5 mtime) /var/log/*
 %attr(700, root, root) /usr/sbin/*
 %attr(700, root, root) /usr/bin/*
-%attr(644, root,  man) %{_mandir}/man[18]/*
+%{_mandir}/man[18]/*
 %{_infodir}/accounting.info.gz
 
 %changelog
