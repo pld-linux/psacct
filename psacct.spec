@@ -1,6 +1,6 @@
 Summary:	Process accounting tools
 Summary(pl):	Program do logowania procesów u¿ytkowników
-Name:		acct
+Name:		psacct
 Version:	6.3.5
 Release:	3
 License:	GPL
@@ -10,8 +10,6 @@ Source0:	ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
 Source1:	acct.logrotate
 Patch0:		acct-info.patch
 Prereq:		/usr/sbin/fix-info-dir
-BuildRequires:	automake
-BuildRequires:	autoconf
 Requires:	logrotate
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -31,6 +29,7 @@ oraz monitorowania systemu.
 aclocal
 autoconf
 automake
+autoheader
 LDFLAGS="-s"; export LDFLAGS
 %configure
 
