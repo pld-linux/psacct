@@ -2,14 +2,16 @@ Summary:	Process accounting tools
 Summary(pl):	Program do logowania procesów u¿ytkowników
 Name:		acct
 Version:	6.3.2
-Release:	6
+Release:	7
 Copyright:	GPL
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
-Source:		ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
+Source0:	ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
+Source1:	acct.logrotate
 Patch0:		acct-config.patch
 Patch1:		acct-info.patch
 Prereq:		/sbin/install-info
+Requires:	logrotate
 BuildRoot:	/tmp/%{name}-%{version}-root
 Obsoletes:	psacct
 
@@ -36,12 +38,14 @@ make CFLAGS="$RPM_OPT_FLAGS -Wall -Wmissing-prototypes" LDFLAGS="-s"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/{usr,var/log}
+install -d $RPM_BUILD_ROOT/{etc/logrotate.d,usr,var/log}
 
 make prefix=$RPM_BUILD_ROOT/usr install
 touch $RPM_BUILD_ROOT/var/log/{pacct,usracct,savacct}
 
-gzip -9f $RPM_BUILD_ROOT%{_datadir}/{info/*,man/man[18]/*}
+install %{SOURCE1} $RPM_BUILD_ROOT/etc/logrotate.d/acct
+
+gzip -9f $RPM_BUILD_ROOT%{_datadir}/{info/*,man/man[18]/*} ChangeLog NEWS
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -50,12 +54,14 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/install-info %{_infodir}/accounting.info.gz /etc/info-dir
 
 %preun
-if [ $1 = 0 ]; then
-	/sbin/install-info --delete %{_infodir}/accounting.info.gz /etc/info-dir
+if [ "$1" = "0" ]; then
+    /sbin/install-info --delete %{_infodir}/accounting.info.gz /etc/info-dir
 fi
 
 %files
 %defattr(644,root,root,755)
+%doc {ChangeLog,NEWS}.gz
+%attr(640,root,root) /etc/logrotate.d/*
 
 %attr(755,root,root) %{_bindir}/ac
 %attr(755,root,root) %{_bindir}/lastcomm
@@ -72,9 +78,11 @@ fi
 %attr(600,root,root) %config %verify(not size md5 mtime) /var/log/*
 
 %changelog
-* Sat May 22 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
-  [6.3.3-6]
-- removed dump-{utmpd,acct},
+* Mon May 24 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
+  [6.3.2-7]
+- FHS 2.0,
+- rotate logs,
+- added %doc,
 - more macros.
 
 * Wed Jan 06 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
@@ -98,9 +106,9 @@ fi
 - translation modified for pl,
 - moved %changelog at the end of spec,
 - added %defattr support,
-- changed permissions of binaries,
+- changed permissions of binaries to 700,
 - added %verify support for pacct, usracct, savacct,
 - added rpm_opt_flags support,
 - build from non root's account,
 - major changes,
-- start at RH spec.
+- start at RH spec file.
