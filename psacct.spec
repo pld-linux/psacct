@@ -19,6 +19,7 @@ Patch3:		%{name}-path.patch
 Requires:	logrotate
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	texinfo
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
