@@ -110,8 +110,8 @@ fi
 %defattr(644,root,root,755)
 %doc {ChangeLog,NEWS,README}*
 %attr(754,root,root) /etc/rc.d/rc.acct
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/acct
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/logrotate.d/acct
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/acct
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/logrotate.d/acct
 %attr(640,root,root) %ghost /var/log/pacct
 %attr(640,root,root) %ghost /var/log/usracct
 %attr(640,root,root) %ghost /var/log/savacct
