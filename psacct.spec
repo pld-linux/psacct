@@ -1,9 +1,9 @@
 Summary:	Process accounting tools
-Summary(es):	Herramientas de contabilidad de procesos
-Summary(pl):	Program do logowania procesСw u©ytkownikСw
-Summary(pt_BR):	Ferramentas de contabilizaГЦo de processos
-Summary(uk):	Утил╕ти для мон╕торингу активност╕ процес╕в
-Summary(ru):	Утилиты для мониторинга активности процессов
+Summary(es.UTF-8):   Herramientas de contabilidad de procesos
+Summary(pl.UTF-8):   Program do logowania procesцЁw uе╪ytkownikцЁw
+Summary(pt_BR.UTF-8):   Ferramentas de contabilizaц╖цёo de processos
+Summary(uk.UTF-8):   пёя┌п╦п╩я√я┌п╦ п╢п╩я▐ п╪п╬п╫я√я┌п╬я─п╦п╫пЁя┐ п╟п╨я┌п╦п╡п╫п╬я│я┌я√ п©я─п╬я├п╣я│я√п╡
+Summary(ru.UTF-8):   пёя┌п╦п╩п╦я┌я▀ п╢п╩я▐ п╪п╬п╫п╦я┌п╬я─п╦п╫пЁп╟ п╟п╨я┌п╦п╡п╫п╬я│я┌п╦ п©я─п╬я├п╣я│я│п╬п╡
 Name:		psacct
 Version:	6.3.5
 Release:	11
@@ -34,24 +34,24 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 The tools necessary for accounting the activities of processes are
 included here.
 
-%description -l es
-EstАn incluidas aquМ las herramientas necesarias para contabilizar las
+%description -l es.UTF-8
+Estц║n incluidas aquц╜ las herramientas necesarias para contabilizar las
 actividades de procesos.
 
-%description -l pl
-NarzЙdzia niezbЙdne do logowania wszystkich procesСw i komend
-u©ytkownikСw oraz monitorowania systemu.
+%description -l pl.UTF-8
+Narzд≥dzia niezbд≥dne do logowania wszystkich procesцЁw i komend
+uе╪ytkownikцЁw oraz monitorowania systemu.
 
-%description -l pt_BR
-As ferramentas necessАrias para contabilizar as atividades de
-processos estЦo incluМdas aqui.
+%description -l pt_BR.UTF-8
+As ferramentas necessц║rias para contabilizar as atividades de
+processos estцёo incluц╜das aqui.
 
-%description -l uk
-Цей пакет м╕стить утил╕ти для збору та обробки статистики активност╕ процес╕в.
+%description -l uk.UTF-8
+п╕п╣п╧ п©п╟п╨п╣я┌ п╪я√я│я┌п╦я┌я▄ я┐я┌п╦п╩я√я┌п╦ п╢п╩я▐ п╥п╠п╬я─я┐ я┌п╟ п╬п╠я─п╬п╠п╨п╦ я│я┌п╟я┌п╦я│я┌п╦п╨п╦ п╟п╨я┌п╦п╡п╫п╬я│я┌я√ п©я─п╬я├п╣я│я√п╡.
 
-%description -l ru
-Этот пакет содержит утилиты для сбора и обработки статистики активности
-процессов.
+%description -l ru.UTF-8
+п╜я┌п╬я┌ п©п╟п╨п╣я┌ я│п╬п╢п╣я─п╤п╦я┌ я┐я┌п╦п╩п╦я┌я▀ п╢п╩я▐ я│п╠п╬я─п╟ п╦ п╬п╠я─п╟п╠п╬я┌п╨п╦ я│я┌п╟я┌п╦я│я┌п╦п╨п╦ п╟п╨я┌п╦п╡п╫п╬я│я┌п╦
+п©я─п╬я├п╣я│я│п╬п╡.
 
 %prep
 %setup -q -n acct-%{version}
