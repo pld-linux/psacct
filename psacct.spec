@@ -1,9 +1,9 @@
 Summary:	Process accounting tools
-Summary(es.UTF-8):   Herramientas de contabilidad de procesos
-Summary(pl.UTF-8):   Program do logowania procesów użytkowników
-Summary(pt_BR.UTF-8):   Ferramentas de contabilização de processos
-Summary(uk.UTF-8):   Утиліти для моніторингу активності процесів
-Summary(ru.UTF-8):   Утилиты для мониторинга активности процессов
+Summary(es.UTF-8):	Herramientas de contabilidad de procesos
+Summary(pl.UTF-8):	Program do logowania procesów użytkowników
+Summary(pt_BR.UTF-8):	Ferramentas de contabilização de processos
+Summary(uk.UTF-8):	Утиліти для моніторингу активності процесів
+Summary(ru.UTF-8):	Утилиты для мониторинга активности процессов
 Name:		psacct
 Version:	6.3.5
 Release:	11
