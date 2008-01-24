@@ -103,8 +103,8 @@ if [ "$1" = "0" ]; then
 	/etc/rc.d/rc.acct stop 1>&2
 fi
 
-%postun
-[ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
+%postun	-p	/sbin/postshell
+-/usr/sbin/fix-info-dir -c %{_infodir}
 
 %files
 %defattr(644,root,root,755)
