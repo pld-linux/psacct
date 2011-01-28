@@ -5,23 +5,18 @@ Summary(pt_BR.UTF-8):	Ferramentas de contabilização de processos
 Summary(uk.UTF-8):	Утиліти для моніторингу активності процесів
 Summary(ru.UTF-8):	Утилиты для мониторинга активности процессов
 Name:		psacct
-Version:	6.3.5
-Release:	11
+Version:	6.5.5
+Release:	1
 License:	GPL
 Group:		Applications/System
 # there is only 6.3.2 on ftp://ftp.gnu.org/pub/gnu/acct/
-# GNU page points to Debian resources, but they have modified ".orig" package
-# and we have something else in CVS, which probably matches this:
-Source0:	ftp://ftp.pl.openwall.com/pub/Owl/pool/sources/acct/acct-%{version}.tar.gz
-# Source0-md5:	a982333648d68e0eabf87989a1e5427b
+Source0:	http://ftp.gnu.org/gnu/acct/acct-%{version}.tar.gz
+# Source0-md5:	554a9e9c6aa3482df07e80853eac0350
 Source1:	acct.logrotate
 Source2:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source2-md5:	85eb213fc45fad1c7834d239ff8e28a4
 Source3:	acct.sysinit
 Source4:	acct.sysconfig
-Patch0:		acct-info.patch
-Patch1:		acct-amfix.patch
-Patch2:		%{name}-ac_am.patch
 Patch3:		%{name}-path.patch
 URL:		http://www.gnu.org/directory/GNU/acct.html
 BuildRequires:	autoconf
@@ -55,17 +50,16 @@ processos estão incluídas aqui.
 
 %prep
 %setup -q -n acct-%{version}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
 %patch3 -p1
 
 %build
-%{__aclocal}
+%{__aclocal} -I m4
 %{__autoconf}
 %{__automake}
 %{__autoheader}
-%configure
+
+%configure \
+	--enable-linux-multiformat
 
 %{__make}
 
