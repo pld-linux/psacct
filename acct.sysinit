@@ -21,30 +21,30 @@ case "$1" in
 	# called by rc.sysinit (or manually by administrator)
 	if is_yes "$ACCT_RUN"; then
 	    run_cmd "Turning on process accounting" \
-	        /sbin/accton "$ACCT_LOG_FILE"
+		/sbin/accton "$ACCT_LOG_FILE"
 	fi
-        ;;
+	;;
   stop)
 	# called by rc.shutdown (or manually by administrator)
 	# NOTE: there is no way to check if accounting is enabled in kernel -
-        # so always try to turn off
-	run_cmd "Turning off process accounting" /sbin/accton
+	# so always try to turn off
+	run_cmd "Turning off process accounting" /sbin/accton off
         ;;
   restart|reload|force-reload)
 	# called by logrotate (or manually by administrator)
 	# NOTE: there is no way to check if accounting is enabled in kernel -
-        # so we must rely on sysconfig setting here
+	# so we must rely on sysconfig setting here
 	if is_yes "$ACCT_RUN"; then
 	    run_cmd "Turning on process accounting" \
 		/sbin/accton "$ACCT_LOG_FILE"
 	else
-	    run_cmd "Turning off process accounting" /sbin/accton
+	    run_cmd "Turning off process accounting" /sbin/accton off
 	fi
-        ;;
+	;;
   *)
-        # show "Usage: %s {start|stop|status|restart|reload|force-reload}" $0
+	# show "Usage: %s {start|stop|status|restart|reload|force-reload}" $0
 	msg_usage "$0 {start|stop|restart|reload|force-reload}"
-        exit 1
+	exit 1
 esac
 
 exit 0
