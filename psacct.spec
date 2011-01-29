@@ -7,9 +7,8 @@ Summary(ru.UTF-8):	Утилиты для мониторинга активнос
 Name:		psacct
 Version:	6.5.5
 Release:	1
-License:	GPL
+License:	GPL v3+
 Group:		Applications/System
-# there is only 6.3.2 on ftp://ftp.gnu.org/pub/gnu/acct/
 Source0:	http://ftp.gnu.org/gnu/acct/acct-%{version}.tar.gz
 # Source0-md5:	554a9e9c6aa3482df07e80853eac0350
 Source1:	acct.logrotate
@@ -65,10 +64,11 @@ processos estão incluídas aqui.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{/etc/{rc.d,logrotate.d,sysconfig},%{_prefix},/sbin,/var/log}
+install -d $RPM_BUILD_ROOT{/etc/{rc.d,logrotate.d,sysconfig},/sbin,/var/log}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
 mv -f $RPM_BUILD_ROOT{%{_sbindir}/accton,/sbin/accton}
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/logrotate.d/acct
@@ -77,6 +77,9 @@ install %{SOURCE4} $RPM_BUILD_ROOT/etc/sysconfig/acct
 bzip2 -dc %{SOURCE2} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
 touch $RPM_BUILD_ROOT/var/log/{pacct,usracct,savacct}
+
+# in PLD it's packaged in SysVinit
+%{__rm} $RPM_BUILD_ROOT{%{_bindir}/last,%{_mandir}/man1/last.1}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -97,12 +100,12 @@ if [ "$1" = "0" ]; then
 	/etc/rc.d/rc.acct stop 1>&2
 fi
 
-%postun	-p	/sbin/postshell
+%postun	-p /sbin/postshell
 -/usr/sbin/fix-info-dir -c %{_infodir}
 
 %files
 %defattr(644,root,root,755)
-%doc {ChangeLog,NEWS,README}*
+%doc AUTHORS ChangeLog NEWS README TODO
 %attr(754,root,root) /etc/rc.d/rc.acct
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/acct
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/logrotate.d/acct
@@ -114,10 +117,12 @@ fi
 %attr(755,root,root) %{_bindir}/lastcomm
 %attr(755,root,root) /sbin/accton
 %attr(755,root,root) %{_sbindir}/dump-acct
+%attr(755,root,root) %{_sbindir}/dump-utmp
 %attr(755,root,root) %{_sbindir}/sa
 
 %{_mandir}/man1/ac.1*
 %{_mandir}/man1/lastcomm.1*
+%{_mandir}/man8/dump-utmp.8*
 %{_mandir}/man8/sa.8*
 %{_mandir}/man8/accton.8*
 %lang(fi) %{_mandir}/fi/man1/ac.1*
