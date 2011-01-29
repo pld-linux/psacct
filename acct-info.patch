@@ -1,0 +1,15 @@
+--- acct-6.5.5/accounting.texi.orig	2010-10-23 13:33:27.000000000 +0200
++++ acct-6.5.5/accounting.texi	2011-01-29 11:00:24.368688037 +0100
+@@ -2,10 +2,9 @@
+ @setfilename accounting.info
+ @settitle Accounting Utilities Manual
+ 
+-@dircategory GNU Utilities
+-
++@dircategory Miscellaneous:
+ @direntry
+-* acct: (acct).                The GNU Accounting utilities for process and login accounting
++* acct: (acct).				GNU Accounting utilities for process and login accounting
+ @end direntry
+ 
+ 

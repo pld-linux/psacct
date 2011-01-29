@@ -16,10 +16,12 @@ Source2:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-ma
 # Source2-md5:	85eb213fc45fad1c7834d239ff8e28a4
 Source3:	acct.sysinit
 Source4:	acct.sysconfig
-Patch3:		%{name}-path.patch
+Patch0:		acct-info.patch
+Patch1:		%{name}-path.patch
 URL:		http://www.gnu.org/directory/GNU/acct.html
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.63
 BuildRequires:	automake
+BuildRequires:	libtool >= 2:2.2.6
 BuildRequires:	texinfo
 Requires:	logrotate
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -49,9 +51,11 @@ processos estão incluídas aqui.
 
 %prep
 %setup -q -n acct-%{version}
-%patch3 -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
+%{__libtoolize}
 %{__aclocal} -I m4
 %{__autoconf}
 %{__automake}
