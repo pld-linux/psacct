@@ -18,6 +18,7 @@ Source3:	acct.sysinit
 Source4:	acct.sysconfig
 Patch0:		acct-info.patch
 Patch1:		%{name}-path.patch
+Patch2:		%{name}-build.patch
 URL:		http://www.gnu.org/directory/GNU/acct.html
 BuildRequires:	autoconf >= 2.63
 BuildRequires:	automake
@@ -53,6 +54,7 @@ processos estão incluídas aqui.
 %setup -q -n acct-%{version}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %{__libtoolize}
