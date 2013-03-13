@@ -1,3 +1,4 @@
+# TODO: consider moving logs to /var/log/account subdir (following upstream)
 Summary:	Process accounting tools
 Summary(es.UTF-8):	Herramientas de contabilidad de procesos
 Summary(pl.UTF-8):	Program do logowania procesów użytkowników
@@ -5,12 +6,12 @@ Summary(pt_BR.UTF-8):	Ferramentas de contabilização de processos
 Summary(uk.UTF-8):	Утиліти для моніторингу активності процесів
 Summary(ru.UTF-8):	Утилиты для мониторинга активности процессов
 Name:		psacct
-Version:	6.5.5
-Release:	2
+Version:	6.6.1
+Release:	1
 License:	GPL v3+
 Group:		Applications/System
 Source0:	http://ftp.gnu.org/gnu/acct/acct-%{version}.tar.gz
-# Source0-md5:	554a9e9c6aa3482df07e80853eac0350
+# Source0-md5:	31a7a2ea81da1fddbc92b9c62cdea1c5
 Source1:	acct.logrotate
 Source2:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source2-md5:	85eb213fc45fad1c7834d239ff8e28a4
@@ -18,11 +19,10 @@ Source3:	acct.sysinit
 Source4:	acct.sysconfig
 Patch0:		acct-info.patch
 Patch1:		%{name}-path.patch
-Patch2:		%{name}-build.patch
 URL:		http://www.gnu.org/directory/GNU/acct.html
 BuildRequires:	autoconf >= 2.63
-BuildRequires:	automake
-BuildRequires:	libtool >= 2:2.2.6
+BuildRequires:	automake >= 1:1.11
+BuildRequires:	libtool >= 2:2.4
 BuildRequires:	texinfo
 Requires:	logrotate
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -54,14 +54,13 @@ processos estão incluídas aqui.
 %setup -q -n acct-%{version}
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
 %{__libtoolize}
 %{__aclocal} -I m4
 %{__autoconf}
-%{__automake}
 %{__autoheader}
+%{__automake}
 
 %configure \
 	--enable-linux-multiformat
