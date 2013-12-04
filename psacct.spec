@@ -7,7 +7,7 @@ Summary(uk.UTF-8):	Утиліти для моніторингу активнос
 Summary(ru.UTF-8):	Утилиты для мониторинга активности процессов
 Name:		psacct
 Version:	6.6.1
-Release:	1
+Release:	2
 License:	GPL v3+
 Group:		Applications/System
 Source0:	http://ftp.gnu.org/gnu/acct/acct-%{version}.tar.gz
