@@ -13,15 +13,6 @@
  @end direntry
  
  
-@@ -468,7 +468,7 @@
- wrong order.  GNU @code{ac} automatically compensates for this, but some
- other @code{ac}s may not...  beware.
- 
--@unnumberedsubsubsec The FTP Problem
-+@unnumberedsubsec The FTP Problem
- 
- I've tested the standard @code{ac} in Ultrix 4.2 (DECstation/DECsystem),
- SunOS 4.1.1 (Sun3, Sun4, Sparc), Mach 2.5 (Omron/Luna), and DomainOS
 @@ -491,7 +491,7 @@
  @code{ac} (provided you specify the other flags that will make GNU
  @code{ac} behave like the system's).

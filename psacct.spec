@@ -6,12 +6,12 @@ Summary(pt_BR.UTF-8):	Ferramentas de contabilização de processos
 Summary(uk.UTF-8):	Утиліти для моніторингу активності процесів
 Summary(ru.UTF-8):	Утилиты для мониторинга активности процессов
 Name:		psacct
-Version:	6.6.1
-Release:	2
+Version:	6.6.4
+Release:	1
 License:	GPL v3+
 Group:		Applications/System
 Source0:	http://ftp.gnu.org/gnu/acct/acct-%{version}.tar.gz
-# Source0-md5:	31a7a2ea81da1fddbc92b9c62cdea1c5
+# Source0-md5:	7caf66ed43edd11f3a84b9dbac7ebbe7
 Source1:	acct.logrotate
 Source2:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source2-md5:	85eb213fc45fad1c7834d239ff8e28a4
@@ -127,6 +127,7 @@ fi
 
 %{_mandir}/man1/ac.1*
 %{_mandir}/man1/lastcomm.1*
+%{_mandir}/man8/dump-acct.8*
 %{_mandir}/man8/dump-utmp.8*
 %{_mandir}/man8/sa.8*
 %{_mandir}/man8/accton.8*
